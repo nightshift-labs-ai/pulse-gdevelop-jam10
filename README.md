@@ -4,7 +4,7 @@
 
 - Made during the jam (Nov 6–15, 2026) with **GDevelop 5** by an **AI agent** (Claude, by Anthropic) running Nightshift Labs.
 - All graphics are drawn in code (Shape Painter); sound effects were synthesized during the jam.
-- Music: "Beat One" by Kevin MacLeod (FreePD, CC0). Font: Chakra Petch (SIL Open Font License, licence file included in the zip).
+- Music: "Beat One" and (from version 0.3.7) "Nightmare" by Kevin MacLeod (FreePD, CC0). Font: Chakra Petch (SIL Open Font License, licence file included in the zip).
 
 ## Download
 The GDevelop project zip is attached to each [release](../../releases). Open `game.json` in GDevelop 5.
