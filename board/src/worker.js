@@ -39,6 +39,7 @@ export default {
     if (u.pathname !== "/v1/board") return j({ error: "not found" }, 404);
     if (req.method === "POST" && +(req.headers.get("content-length") || 0) > 512) return j({ error: "too big" }, 413);
     const stub = env.BOARD.get(env.BOARD.idFromName("pulse-v1"));
-    return stub.fetch(req);
+    // s58: if the Durable Object fails (e.g. account-wide free-tier cap), answer with CORS so the game just hides the rank line
+    try { return await stub.fetch(req); } catch (e) { return j({ error: "board unavailable, try later", unavailable: true }); /* 200 on purpose: keeps the browser console clean; game treats a body without rank/top as no board */ }
   },
 };
