@@ -14,7 +14,9 @@ export class Board {
     const total = this.sql.exec("SELECT COUNT(*) AS c FROM b WHERE mode = ?", mode).one().c;
     const top = this.sql.exec("SELECT score FROM b WHERE mode = ? ORDER BY score DESC LIMIT 5", mode).toArray().map(r => r.score);
     const rank = score == null ? null : this.sql.exec("SELECT COUNT(*) AS c FROM b WHERE mode = ? AND score > ?", mode, score).one().c + 1;
-    return { total, top, rank };
+    // s69: score just above this one (index seek, 1 row) → game shows "+N to pass #rank-1"
+    const ab = score == null || rank <= 1 ? null : this.sql.exec("SELECT MIN(score) AS s FROM b WHERE mode = ? AND score > ?", mode, score).one().s;
+    return ab == null ? { total, top, rank } : { total, top, rank, above: ab };
   }
   async fetch(req) {
     const u = new URL(req.url), m = u.searchParams.get("mode"), mode = m === "relaxed" || m === "qa" ? m : "normal"; // qa = test bucket for automated checks
